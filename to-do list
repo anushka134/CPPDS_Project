@@ -1,0 +1,121 @@
+//To-do list
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Task {
+    string name;
+    bool status;
+};
+
+const int MAX = 100;  // Maximum number of tasks set to 100
+Task tasks[MAX];
+int count = 0;
+
+// to add task in to-do list
+void addtask() {
+    if (count < MAX) {
+        Task task;
+        cout << "Enter Task Name: ";
+        cin.ignore();
+        getline(cin, task.name);
+        task.status = false;
+        tasks[count++] = task;
+        cout << "Task added!" << endl;
+    } else {
+        cout << "Task list is full." << endl;
+    }
+}
+
+//to display all tasks along with status
+void displaytasks() {
+    if (count == 0) {
+        cout << "No tasks." << endl;
+    } else {
+        for (int i = 0; i < count; i++) {
+            cout << (i + 1) << ". Name: " << tasks[i].name << " | Status: " << (tasks[i].status ? "Complete" : "Incomplete") << endl;
+        }
+    }
+}
+
+// to mark a task as done
+void taskcomplete() {
+    displaytasks();
+    int taskno;
+    cout << "Enter the task number to mark as done: ";
+    cin >> taskno;
+    if (taskno >= 1 && taskno <= count) {
+        tasks[taskno - 1].status = true;
+        cout << "Task marked as done." << endl;
+    } else {
+        cout << "Invalid task number." << endl;
+    }
+}
+
+// to delete as task from to-do list
+void deletetask() {
+    displaytasks();
+    int taskno;
+    cout << "Enter the task number to delete: ";
+    cin >> taskno;
+    if (taskno >= 1 && taskno <= count) {
+        for (int i = taskno - 1; i < count - 1; i++) {
+            tasks[i] = tasks[i + 1];
+        }
+        count--;
+        cout << "Task deleted." << endl;
+    } else {
+        cout << "Invalid task number." << endl;
+    }
+}
+
+// tells us about what this program can do
+void helpandabt() {
+    cout << "This project helps the user in creating a 'To-Do List' along with giving the user the options to Add tasks, Mark them as complete, Delete tasks, and display all tasks. The project has a user-friendly menu where they have to just select what they want to do by entering the choice number given." << endl;
+    cout << endl;
+    cout << "Made by:\nAkshara Vinjamuri\nAnshuman Nerkar\nAnushka Sinha" << endl;
+    cout << endl;
+    cout << endl;
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "To-Do List Menu:\n";
+        cout << "1. Help and About:\n";
+        cout << "2. Add a task\n";
+        cout << "3. Show tasks\n";
+        cout << "4. Mark a task as done\n";
+        cout << "5. Delete a task\n";
+        cout << "6. Quit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                helpandabt();
+                break;
+            case 2:
+                addtask();
+                break;
+            case 3:
+                displaytasks();
+                break;
+            case 4:
+                taskcomplete();
+                break;
+            case 5:
+                deletetask();
+                break;
+            case 6:
+                cout << "Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice. Try again." << endl;
+        }
+    } while (choice != 6);
+
+    return 0;
+}
